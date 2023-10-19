@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.model;
 
 public class Component extends ComputerDecorator {
     private String description;

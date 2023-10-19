@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.test;
 
 import java.sql.*;
  

@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.model;
 
 import java.util.Date;
 import java.util.List;

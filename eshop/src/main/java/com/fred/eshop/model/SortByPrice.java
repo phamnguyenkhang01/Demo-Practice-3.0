@@ -1,15 +1,15 @@
-package com.fred.eshop;
+package com.fred.eshop.model;
 
 import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SortByOrderID implements SortStrategy {
+public class SortByPrice implements SortStrategy {
     @Override public void sort(List<Computer> cart) {
         Collections.sort(cart, new Comparator<Computer>() {
             @Override public int compare(Computer c1, Computer c2) {
-                return c2.getOrderID().compareTo(c1.getOrderID());
+                return (int) (c2.getPrice() - c1.getPrice());
             }
         });
-    }  
+    }
 }

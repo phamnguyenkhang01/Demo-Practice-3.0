@@ -1,10 +1,15 @@
-package com.fred.eshop;
+package com.fred.eshop.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.fred.eshop.dao.OrderDAO;
+import com.fred.eshop.dao.OrderDAOMySql;
+import com.fred.eshop.model.Order;
+import com.fred.eshop.model.Product;
 
 import java.util.ArrayList;
 

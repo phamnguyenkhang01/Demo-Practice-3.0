@@ -1,6 +1,10 @@
-package com.fred.eshop;
+package com.fred.eshop.console;
 
 import java.util.Scanner;
+
+import com.fred.eshop.model.SortByOrderID;
+import com.fred.eshop.model.SortByPrice;
+
 import java.util.Arrays;
 
 public class Main {

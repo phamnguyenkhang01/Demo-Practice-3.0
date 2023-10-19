@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.dao;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import org.springframework.util.ResourceUtils;
+
+import com.fred.eshop.model.Product;
 
 public class ProductDAOMySql implements ProductDAO {
     @Override

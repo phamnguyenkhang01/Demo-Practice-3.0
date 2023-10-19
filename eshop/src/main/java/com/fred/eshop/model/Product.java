@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.model;
 
 public class Product {
     private int id;

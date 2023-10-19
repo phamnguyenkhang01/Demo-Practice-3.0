@@ -12,7 +12,7 @@
  * 01-December-2022  Fred Y      Initial release
  *****************************************************************************
  */
-package com.fred.eshop;
+package com.fred.eshop.model;
 
 public interface Computer {
     String getDescription();

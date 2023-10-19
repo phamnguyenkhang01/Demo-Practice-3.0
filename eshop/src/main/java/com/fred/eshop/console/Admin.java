@@ -1,8 +1,13 @@
-package com.fred.eshop;
+package com.fred.eshop.console;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import com.fred.eshop.dao.ProductDAO;
+import com.fred.eshop.dao.ProductDAOMySql;
+import com.fred.eshop.model.Product;
+
 import java.sql.SQLException;
 
 public class Admin {

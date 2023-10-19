@@ -1,6 +1,11 @@
-package com.fred.eshop;
+package com.fred.eshop.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fred.eshop.model.Order;
+import com.fred.eshop.model.Product;
+import com.fred.eshop.service.OrderService;
+import com.fred.eshop.service.ProductService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,8 @@
-package com.fred.eshop;
+package com.fred.eshop.test;
+
+import com.fred.eshop.model.Order;
+import com.fred.eshop.model.Product;
+import com.fred.eshop.service.OrderService;
 
 public class ServiceTest {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +6,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.Properties;
+
+import com.fred.eshop.dao.OrderDAO;
+import com.fred.eshop.dao.OrderDAOMySql;
+import com.fred.eshop.dao.ProductDAO;
+import com.fred.eshop.dao.ProductDAOMySql;
+import com.fred.eshop.model.Order;
+import com.fred.eshop.model.Product;
 
 import java.util.Calendar;
 import java.util.Date;

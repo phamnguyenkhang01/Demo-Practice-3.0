@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.console;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -7,6 +7,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+
+import com.fred.eshop.dao.ProductDAO;
+import com.fred.eshop.dao.ProductDAOMySql;
+import com.fred.eshop.model.Component;
+import com.fred.eshop.model.Computer;
+import com.fred.eshop.model.ComputerBase;
+import com.fred.eshop.model.Order;
+import com.fred.eshop.model.Product;
+import com.fred.eshop.model.SortStrategy;
+import com.fred.eshop.service.OrderService;
+import com.fred.eshop.service.ProductService;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;

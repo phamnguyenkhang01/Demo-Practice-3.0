@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.dao;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +14,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
+
+import com.fred.eshop.model.Order;
+import com.fred.eshop.model.Product;
 
 @Repository
 public class OrderDAOMySql implements OrderDAO {

@@ -1,7 +1,12 @@
-package com.fred.eshop;
+package com.fred.eshop.service;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import com.fred.eshop.dao.ProductDAO;
+import com.fred.eshop.dao.ProductDAOMySql;
+import com.fred.eshop.model.Product;
+
 import java.util.ArrayList;
 
 public class ProductService {

@@ -1,4 +1,4 @@
-package com.fred.eshop;
+package com.fred.eshop.model;
 
 import java.util.Random;
 import java.util.List;

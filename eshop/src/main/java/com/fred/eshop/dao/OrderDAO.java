@@ -1,7 +1,9 @@
-package com.fred.eshop;
+package com.fred.eshop.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import com.fred.eshop.model.Order;
 
 public interface OrderDAO {
     // CRUD
