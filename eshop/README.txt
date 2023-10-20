@@ -22,3 +22,7 @@ use mysql;
 update user set host='%' where user='root'; flush privileges;
 
 docker run -d --name phpmyadmin --link mysql:db -p 8080:80 phpmyadmin
+
+
+Question: 
+1. consume? produce? How do they work? (in ProductAPI.java)

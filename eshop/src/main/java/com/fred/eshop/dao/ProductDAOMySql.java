@@ -16,7 +16,7 @@ import com.fred.eshop.model.Product;
 public class ProductDAOMySql implements ProductDAO {
     @Override
     public void create(Product product) throws SQLException {
-        String createQuery = "INSERT INTO product (name, price, quantity) VALUES (?, ?, ?)";
+        String createQuery = "INSERT INTO product (description, price, quantity) VALUES (?, ?, ?)";
         try (Connection conn = getConnection()) {
             PreparedStatement stat = conn.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
             stat.setString(1, product.getDescription());

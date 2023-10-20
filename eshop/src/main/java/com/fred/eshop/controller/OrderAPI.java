@@ -14,18 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
-public class APIController {
-    @GetMapping("/")
-    public String index() {
-        return "hello";
-    }
-
-    @GetMapping("/getProduct")
-    public String getProduct() {
-        ProductService pService = new ProductService();
-        Product product =  pService.read(2);
-        return product.toString();
-    } 
+public class OrderAPI {
 
     @Autowired
     OrderService oSercvice;
