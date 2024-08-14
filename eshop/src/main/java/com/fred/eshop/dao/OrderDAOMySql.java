@@ -49,7 +49,7 @@ public class OrderDAOMySql implements OrderDAO {
             }
             
             conn.commit();
-        } catch (IOException ex) {
+        } catch (IOException ex) {           
             throw new SQLException("Can not load DB driver configuration");
         }
     }
@@ -59,12 +59,12 @@ public class OrderDAOMySql implements OrderDAO {
         Order order = null;
         List<Product> products = new ArrayList<>();
         String orderQuery = "SELECT * FROM productOrder WHERE oid=" + id;
-        String productQuery = "SELECT product.pid, product.description, product.price, product.quantity, orderDetails.quantity FROM product INNER JOIN orderDetails on product.pid = orderDetails.pid WHERE orderDetails.oid = " + id; 
+        String productQuery = "SELECT product.pid, product.name, product.price, product.quantity, product.image, orderDetails.quantity FROM product INNER JOIN orderDetails on product.pid = orderDetails.pid WHERE orderDetails.oid = " + id;
         
-        try (Connection conn = dataSource.getConnection(); Statement stat = conn.createStatement()) {
+        try (Connection conn = getConnection(); Statement stat = conn.createStatement()) {
             ResultSet rs = stat.executeQuery(productQuery);
             while (rs.next()) {
-                Product product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(5));
+                Product product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(6),rs.getString(5));
                 product.setID(rs.getInt(1));
                 products.add(product);
             }
@@ -73,6 +73,7 @@ public class OrderDAOMySql implements OrderDAO {
             if (rs.next())
                 order = new Order(id, rs.getString(2), rs.getFloat(3), rs.getTimestamp(4), products);
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new SQLException("Can not get order from DB");
         }
 
@@ -101,15 +102,36 @@ public class OrderDAOMySql implements OrderDAO {
     @Override
     public int update(Order order) throws SQLException {
         String updateQuery = "UPDATE productOrder SET description=?, total=?, date_time=? WHERE oid=?";
+        String deleteQuery = "DELETE FROM orderDetails WHERE oid =?";
+        String insertQuery = "INSERT INTO orderDetails (oid, pid, quantity) VALUES (?,?,?)";
         // update product list
         int row = 0;
         try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false);
+
+            // update order 
             PreparedStatement stat = conn.prepareStatement(updateQuery);
             stat.setString(1, order.getDescription());
             stat.setFloat(2, order.getPrice());            
             stat.setTimestamp(3, new Timestamp(order.getDate().getTime()));
             stat.setString(4, order.getOrderID());
             row = stat.executeUpdate();
+            
+            // delete products belong to the order
+            stat = conn.prepareStatement(deleteQuery);
+            stat.setString(1, order.getOrderID());
+            row = stat.executeUpdate();
+
+            // insert updated products into the order
+            stat = conn.prepareStatement(insertQuery);
+            for (Product product : order.getProducts()) {
+                stat.setString(1, order.getOrderID());
+                stat.setInt(2, product.getID());
+                stat.setInt(3, product.getQuantity());
+                stat.executeUpdate();
+            }
+
+            conn.commit();
         } catch (IOException ex) {
             throw new SQLException("Cannot load DB driver configuration");
         } 
@@ -140,7 +162,7 @@ public class OrderDAOMySql implements OrderDAO {
     public static Connection getConnection() throws SQLException, IOException {
         var props = new Properties();
 
-        File file = ResourceUtils.getFile("classpath:database.propertsies");
+        File file = ResourceUtils.getFile("classpath:database.properties");
         InputStream in = new FileInputStream(file);
         props.load(in);
         

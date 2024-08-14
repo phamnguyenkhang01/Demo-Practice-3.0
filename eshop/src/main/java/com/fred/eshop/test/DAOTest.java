@@ -46,7 +46,7 @@ public class DAOTest {
 
     public static void testCreate() throws SQLException {
         ProductDAO dao = new ProductDAOMySql();
-        Product product = new Product("New component", 9.99f, 1);
+        Product product = new Product("New component", 9.99f, 1, "images/keyboard.jpg");
         dao.create(product);
         System.out.println(product);
     }    
@@ -66,7 +66,7 @@ public class DAOTest {
 
     public static void testUpdate() throws SQLException {
         ProductDAO dao = new ProductDAOMySql();
-        Product product = new Product("Our latest", 99.9f, 1);
+        Product product = new Product("Our latest", 99.9f, 1,"images/keyboard.jpg");
         product.setID(10);
         int row = dao.update(product);
         System.out.println(row + "");

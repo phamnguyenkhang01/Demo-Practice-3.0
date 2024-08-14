@@ -79,7 +79,9 @@ public class Admin {
         float price = sc.nextFloat();
         System.out.print("Component quantity: ");
         int quantity = sc.nextInt();        
-        Product product = new Product(desc, price, quantity);
+        System.out.print("Component image: ");
+        String image = sc.next();
+        Product product = new Product(desc, price, quantity, image);
         dao.create(product);
         MarketSpace.getInstance().loadProductsDB();
     }

@@ -5,11 +5,14 @@ public class Product {
     private String description;
     private float price;
     private int quantity;
+    private String image;
 
-    public Product(String description, float price, int quantity) {
+
+    public Product(String description, float price, int quantity, String image) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
+        this.image = image;
     }
 
     public int getID() {
@@ -39,8 +42,17 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+        public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
     @Override
     public String toString() {
-        return this.id + " " + this.description + " " + this.price + " " + this.quantity;
+        return this.id + " " + this.description + " " + this.price + " " + this.quantity + this.image;
     }
 }

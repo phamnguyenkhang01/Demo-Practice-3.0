@@ -23,12 +23,24 @@ public class Order {
         return this.description;
     }
 
+    public void setDescription(String desc){
+        this.description = desc;
+    }
+
     public float getPrice() {
         return this.price;
     }
 
+    public void setPrice(float price){
+        this.price = price;
+    }
+
     public String getOrderID() {
         return this.orderID;
+    }
+
+    public void setOrderID (String id){
+        this.orderID = id;
     }
 
     public Date getDate() {

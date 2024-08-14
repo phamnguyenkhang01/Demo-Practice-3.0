@@ -16,12 +16,13 @@ import com.fred.eshop.model.Product;
 public class ProductDAOMySql implements ProductDAO {
     @Override
     public void create(Product product) throws SQLException {
-        String createQuery = "INSERT INTO product (description, price, quantity) VALUES (?, ?, ?)";
+        String createQuery = "INSERT INTO product (name, price, quantity, image) VALUES (?, ?, ?, ?)";
         try (Connection conn = getConnection()) {
             PreparedStatement stat = conn.prepareStatement(createQuery, Statement.RETURN_GENERATED_KEYS);
             stat.setString(1, product.getDescription());
             stat.setFloat(2, product.getPrice());
             stat.setInt(3, product.getQuantity());
+            stat.setString(4, product.getImage());            
             stat.executeUpdate();
 
             ResultSet rs = stat.getGeneratedKeys();
@@ -41,7 +42,7 @@ public class ProductDAOMySql implements ProductDAO {
         try (Connection conn = getConnection(); Statement stat = conn.createStatement()) {
             try (ResultSet rs = stat.executeQuery("SELECT * FROM product WHERE pid=" + id)) {
                 if (rs.next())
-                    product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(4));
+                    product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(4), rs.getString(5));
                     product.setID(rs.getInt(1));
             }       
         } catch (Exception ex) {
@@ -53,12 +54,30 @@ public class ProductDAOMySql implements ProductDAO {
     }
 
     @Override
+    public List<Product> read(String id) throws SQLException {
+        List<Product> products = new ArrayList<Product>();
+        try (Connection conn = getConnection(); Statement stat = conn.createStatement()) {
+            try (ResultSet rs = stat.executeQuery("SELECT * FROM product WHERE oid=" + id)) {
+                while (rs.next()) {
+                    Product product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(4), rs.getString(5));
+                    product.setID(rs.getInt(1));
+                    products.add(product);
+                }
+            }
+        } catch (IOException ex) {
+            throw new SQLException("Can not connect to DB");
+        }
+
+        return products;
+    }    
+
+    @Override
     public List<Product> readAll() throws SQLException {
         List<Product> products = new ArrayList<Product>();
         try (Connection conn = getConnection(); Statement stat = conn.createStatement()) {
             try (ResultSet rs = stat.executeQuery("SELECT * FROM product")) {
                 while (rs.next()) {
-                    Product product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(4));
+                    Product product = new Product(rs.getString(2), rs.getFloat(3), rs.getInt(4), rs.getString(5));
                     product.setID(rs.getInt(1));
                     products.add(product);
                 }
@@ -72,7 +91,7 @@ public class ProductDAOMySql implements ProductDAO {
 
     @Override
     public int update(Product product) throws SQLException {
-        String updateQuery = "UPDATE product SET name=?, price=?, quantity=? WHERE pid=?";
+        String updateQuery = "UPDATE product SET name=?, price=?, quantity=?, image=? WHERE pid=?";
         int row = 0;
         
         try (Connection conn = getConnection()) {
@@ -80,7 +99,8 @@ public class ProductDAOMySql implements ProductDAO {
             stat.setString(1, product.getDescription());
             stat.setFloat(2, product.getPrice());            
             stat.setInt(3, product.getQuantity());
-            stat.setInt(4, product.getID());
+            stat.setString(4, product.getImage());             
+            stat.setInt(5, product.getID());           
             row = stat.executeUpdate();
         } catch (IOException ex) {
             throw new SQLException("Can not connect to DB");

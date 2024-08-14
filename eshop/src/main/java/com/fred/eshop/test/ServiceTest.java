@@ -22,6 +22,6 @@ public class ServiceTest {
     public static void testCancelOrder() {
         OrderService oService = new OrderService();
         Order order = oService.read("73");
-        oService.cancel(order);
+        oService.cancel("73");
     }
 }

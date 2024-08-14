@@ -51,7 +51,7 @@ public class MarketSpace {
             while (sc.hasNextLine()) {
                 line = sc.nextLine().strip();
                 tokens = line.split(",");
-                product = new Product(tokens[0], (float)Double.parseDouble(tokens[1]), Integer.parseInt(tokens[2]));
+                product = new Product(tokens[0], (float)Double.parseDouble(tokens[1]), Integer.parseInt(tokens[2]), tokens[3]);
                 products.put(i++, product);
             }
         } catch (FileNotFoundException ex) {
@@ -99,7 +99,7 @@ public class MarketSpace {
                 Product product = products.get(c);
                 int stock = product.getQuantity();
                 if (stock > 0) {
-                    Product component = new Product(product.getDescription(), product.getPrice(), 1);
+                    Product component = new Product(product.getDescription(), product.getPrice(), 1, product.getImage());
                     component.setID(product.getID());
 
                     if (components.containsKey(component.getID()))

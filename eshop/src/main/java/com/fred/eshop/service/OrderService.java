@@ -5,11 +5,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fred.eshop.dao.OrderDAO;
 import com.fred.eshop.dao.OrderDAOMySql;
+import com.fred.eshop.dao.ProductDAO;
+import com.fred.eshop.dao.ProductDAOMySql;
 import com.fred.eshop.model.Order;
 import com.fred.eshop.model.Product;
+
 
 import java.util.ArrayList;
 
@@ -19,10 +23,19 @@ public class OrderService {
     private OrderDAO odao;
 
     public void create(Order order) {
-        OrderDAO dao = new OrderDAOMySql();
+        // OrderDAO dao = new OrderDAOMySql();
         try {
-            dao.create(order);
+            odao.create(order);
+
+            // update stock in products
+            List<Product> products = order.getProducts();
+            ProductService pService = new ProductService();
+            // decrease product stock by refunded product quantity
+            for (Product product : products)
+                product.setQuantity(pService.read(product.getID()).getQuantity() - product.getQuantity());
+            pService.updateAll(products);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Error creating order in db");
         }
     }
@@ -51,20 +64,31 @@ public class OrderService {
 
         return orders;
     }    
+    @Transactional
+    public void update(Order order){        
+            cancel(order.getOrderID());
+            create(order);
+    }
 
-    public void cancel(Order order) {
+    @Transactional
+    public void cancel(String id) {
         OrderDAO dao = new OrderDAOMySql();  
-       try {
-            dao.delete(order.getOrderID());
 
+       try {
             // update stock in products
+            Order order = dao.read(id);
             List<Product> products = order.getProducts();
             ProductService pService = new ProductService();
             // increase product stock by refunded product quantity
-            for (Product product : products)
-                product.setQuantity(product.getQuantity() + pService.read(product.getID()).getQuantity());
+            for (Product product : products){
+                System.out.println(product.getImage());
+                product.setQuantity(pService.read(product.getID()).getQuantity() + product.getQuantity() );
+            }
             pService.updateAll(products);
+
+            dao.delete(id);
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Error cancel order in db");
         }              
     }

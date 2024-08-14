@@ -10,6 +10,7 @@ public interface ProductDAO {
     void create(Product product) throws SQLException;
     Product read(int id) throws SQLException;
     List<Product> readAll() throws SQLException;
+    List<Product> read(String id) throws SQLException;
     int update(Product product) throws SQLException;
     int delete(int id) throws SQLException;
 }

@@ -54,4 +54,28 @@ public class ProductService {
                 System.out.println("Error updating products in db");
             }        
     }
+
+    public void update(Product product) {
+        ProductDAO dao = new ProductDAOMySql();        
+        
+            try {
+                dao.update(product);     
+            } catch (SQLException ex) {
+                System.out.println("Error updating products in db");
+            }        
+    }
+    public int delete(int id) {
+        ProductDAO dao = new ProductDAOMySql();
+        int n = 0;        
+        try {
+            n = dao.delete(id);
+        } catch (SQLException ex) {
+            System.out.println("Error deleting product in db");
+        }
+
+        return n;
+    }
+         
 }
+
+
